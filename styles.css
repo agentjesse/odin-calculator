@@ -12,19 +12,50 @@ h1{
 }
 .frame {
   background-color: rgb(206, 232, 255);
-  flex-basis: 70%;
+  flex-basis: 80%;
   border: 1px solid #009fff;
   border-radius: 5px;
   padding: 0.5em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7em;
 }
 .screen{
+  flex-basis: 100%;
   background-color: rgb(255, 255, 255);
   border-radius: 5px;
-  margin-bottom: 0.5em;
+  padding: 0.25em;
 }
 button{
 	background-color: rgb(255, 255, 255);
-  border: 2px solid #bce5ff;
+  border: 2px solid #99d8ff;
   border-radius: 5px;
-  font-size: 1em;
+  font-size: 1.5em;
+  flex-basis: 20%;
+  /* margin: 0 0.5em; */
 }
+button:hover{
+  background-color: rgb(172, 249, 255);
+}
+.numbers{
+  flex-basis: 50%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.operators {
+  flex-basis: 25%;
+  display: flex;
+  flex-direction: column;
+}
+.enterClear {
+  flex-basis: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.enterClear button:nth-of-type(2){
+  flex: 1 1 auto;
+}
+
+
+
