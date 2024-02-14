@@ -1,0 +1,7 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-wrap: wrap; /*this is nice, just set flex-basis for wrapping*/
+  justify-content: center;
+}
