@@ -39,6 +39,12 @@ const updateScreen = newData=> {
   screen.textContent = newData;
   screenData = newData;
 }
+//clear calculator logic
+const clearCalculatorState = ()=> {
+  rawResult = 0;
+  decimalAdded = false;
+  lastOperator = lastOperand = currentOperand = lastCalculation = lastBtnPress = null;
+}
 
 //button handling logic. store numbers until an operator or equal button is pressed, then use calculationHandle object.
 document.querySelector('.frame').addEventListener('click',e=>{
@@ -48,20 +54,42 @@ document.querySelector('.frame').addEventListener('click',e=>{
   switch (pressedBtn){
     case'ac': //full calculator reset
       updateScreen('');
-      rawResult = 0;
-      decimalAdded = false;
-      lastOperator = lastOperand = currentOperand = lastCalculation = lastBtnPress = null;
+      clearCalculatorState();
       break;
     case'.':
-      if ( '+-*/'.includes(lastBtnPress) ){
+      if ( '0123456789'.includes(lastBtnPress) && !decimalAdded ){ //handle decimal after a digit press
+        updateScreen(screenData+pressedBtn)
+        lastBtnPress = pressedBtn;
+        decimalAdded = true;
+        break;
+      }
+      if ( '+-*/'.includes(lastBtnPress) ){ //handle decimal start after a calculation
+        updateScreen('0.')
+        lastBtnPress = pressedBtn;
+        decimalAdded = true;
         break;
       }
       if (!decimalAdded){
+        if (!screenData){ //add with zero from empty screen
+          updateScreen('0'+pressedBtn);
+          decimalAdded = true;
+          break;
+        }
         updateScreen(screenData+pressedBtn);
         decimalAdded = true;
       }
       break;
     case'0':case'1':case'2':case'3':case'4':case'5':case'6':case'7':case'8':case'9':
+      if ('.'.includes(lastBtnPress)){
+        updateScreen(screenData+pressedBtn); //update screen with new digit, set button history
+        lastBtnPress = pressedBtn;
+        break;
+      }
+      if ( '='.includes(lastBtnPress) ){ //handle new number after equal sign use
+        clearCalculatorState();
+        updateScreen(pressedBtn);
+        break;
+      }
       if ( '+-*/'.includes(lastBtnPress) ){ //overwrite screen if a digit pressed right after an operator and set lastBtnPress correctly
         updateScreen(pressedBtn);
         decimalAdded = false;
@@ -76,9 +104,14 @@ document.querySelector('.frame').addEventListener('click',e=>{
       if(lastCalculation){ //if there was a previous calculation, we need to clear it from the screen before adding the new number
         updateScreen('');
       }
-      updateScreen(screenData+pressedBtn); //just add the new digit
+      updateScreen(screenData+pressedBtn); //update screen with new digit, set button history
+      lastBtnPress = pressedBtn;
       break;
     case'+':case'-':case'*':case'/':
+      if ( '+-*/'.includes(lastBtnPress) ){
+        lastBtnPress = lastOperator = pressedBtn;
+        break;
+      }
       if ( '='.includes(lastBtnPress) ){
         lastCalculation = lastOperand = screen.textContent;
         lastOperator = lastBtnPress = pressedBtn;
