@@ -57,12 +57,6 @@ document.querySelector('.frame').addEventListener('click',e=>{
       clearCalculatorState();
       break;
     case'.':
-      if ( '0123456789'.includes(lastBtnPress) && !decimalAdded ){ //handle decimal after a digit press
-        updateScreen(screenData+pressedBtn)
-        lastBtnPress = pressedBtn;
-        decimalAdded = true;
-        break;
-      }
       if ( '+-*/'.includes(lastBtnPress) ){ //handle decimal start after a calculation
         updateScreen('0.')
         lastBtnPress = pressedBtn;
@@ -108,8 +102,13 @@ document.querySelector('.frame').addEventListener('click',e=>{
       lastBtnPress = pressedBtn;
       break;
     case'+':case'-':case'*':case'/':
+      if ( lastOperator === '/' && lastBtnPress === '0') { //handle zero division
+        updateScreen('oops, division by zero');
+        break;
+      }
       if ( '+-*/'.includes(lastBtnPress) ){
         lastBtnPress = lastOperator = pressedBtn;
+        updateScreen('oops, operand missing');
         break;
       }
       if ( '='.includes(lastBtnPress) ){
@@ -134,11 +133,20 @@ document.querySelector('.frame').addEventListener('click',e=>{
       lastOperand = screenData;
       break;
     case'=':
+      // if( lastBtnPress = pressedBtn ){ //handle multiple '=' presses
+      //   updateScreen('oops, double equals');
+      //   break;
+      // }
+      if ( lastOperator === '/' && lastBtnPress === '0') { //handle zero division
+        updateScreen('oops, division by zero');
+        break;
+      }
       //use screen data as current operand
       currentOperand = screen.textContent;
       rawResult = calculationHandle.operate(lastOperand,lastOperator,currentOperand);
       updateScreen( Number.isInteger(rawResult) ? rawResult : rawResult.toFixed(8) );
       lastBtnPress = pressedBtn;
+      break;
   }
   
 })
