@@ -22,9 +22,11 @@ h1{
 }
 .screen{
   flex-basis: 100%;
+  font-size: 1.5em;
   background-color: rgb(255, 255, 255);
   border-radius: 5px;
   padding: 0.25em;
+  text-align: left;
 }
 button{
 	background-color: rgb(255, 255, 255);
@@ -38,7 +40,7 @@ button:hover{
   background-color: rgb(172, 249, 255);
 }
 .numbers{
-  flex-basis: 50%;
+  flex-basis: 48%;
   display: flex;
   flex-wrap: wrap;
 }
