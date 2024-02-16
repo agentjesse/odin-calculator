@@ -57,6 +57,13 @@ document.querySelector('.frame').addEventListener('click',e=>{
       clearCalculatorState();
       break;
     case'.':
+			if ( '='.includes(lastBtnPress) ){ //decimal press after equal sign should clear and render 0.
+				updateScreen('0.');
+				clearCalculatorState();
+        lastBtnPress = pressedBtn;
+        decimalAdded = true;
+        break;
+			}
       if ( '+-*/'.includes(lastBtnPress) ){ //handle decimal start after a calculation
         updateScreen('0.')
         lastBtnPress = pressedBtn;
@@ -150,6 +157,3 @@ document.querySelector('.frame').addEventListener('click',e=>{
   }
   
 })
-
-
-
