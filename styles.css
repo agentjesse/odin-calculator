@@ -18,6 +18,13 @@ body {
   flex-wrap: wrap;
   gap: 9px;
 }
+@media only screen and (max-device-width: 420px) /* fix for iPhone XR in portrait */
+{
+  .frame {
+    width: 450px;
+  }
+}
+
 .screen {
   flex-basis: 95%;
   font-size: 1.75em;
@@ -30,6 +37,7 @@ body {
 }
 button{
 	background-color: rgb(175 161 155);
+  color: #000;
   border: 3px solid #271a00;
   border-radius: 20px;
   font-size: 1.5em;
